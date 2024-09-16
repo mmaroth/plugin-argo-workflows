@@ -22,7 +22,7 @@ kind: Component
 metadata:
   name: backstage
   annotations:
-    backstage.io/kubernetes-namespace: default
+    argo-workflows.cnoe.io/namespace: default
     argo-workflows.cnoe.io/label-selector: env=dev,my=label
 spec:
   type: service
@@ -172,7 +172,7 @@ kubernetes:
           caData: LS0t
 ```
 
-For this configuration, the `argo-workflows/cluster-name` annotaton value must be `my-cluster-1`
+For this configuration, the `argo-workflows.cnoe.io/cluster-name` annotaton value must be `my-cluster-1`
 
 ```yaml
 apiVersion: backstage.io/v1alpha1
@@ -180,9 +180,26 @@ kind: Component
 metadata:
   name: backstage
   annotations:
-    backstage.io/kubernetes-namespace: default
+    argo-workflows.cnoe.io/namespace: default
     argo-workflows.cnoe.io/label-selector: env=dev,my=label
-    argo-workflows/cluster-name: my-cluster-1
+    argo-workflows.cnoe.io/cluster-name: my-cluster-1
+spec:
+  type: service
+  lifecycle: experimental
+  owner: user1
+  system: system1
+```
+
+If we remove the `argo-workflows.cnoe.io/namespace` annotation, it will show all label matched workflows across all namespaces.
+
+```yaml
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage
+  annotations:
+    argo-workflows.cnoe.io/label-selector: env=dev,my=label
+    argo-workflows.cnoe.io/cluster-name: my-cluster-1
 spec:
   type: service
   lifecycle: experimental
